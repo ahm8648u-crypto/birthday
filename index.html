@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Happy Birthday, Handsome!</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,400&family=Poppins:wght@300;400;500&family=Tajawal:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{--pink:#ff6b8b;--rose:#ff4d6d;--crimson:#c2335c;--ink:#4a3b42;--dark:#2b2527}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:#fff;color:var(--ink);font-family:"Poppins",system-ui,sans-serif;font-weight:300;font-size:18px;line-height:1.8;text-align:center}
+body.locked{overflow:hidden;height:100vh}
+h1,h2{font-family:"Playfair Display",Georgia,serif;font-weight:700;line-height:1.2;margin:0}
+h2{color:var(--rose);font-size:clamp(34px,9vw,52px)}
+h2.dark{color:var(--dark);font-weight:900}
+
+/* password gate */
+.gate{position:fixed;inset:0;z-index:100;display:flex;align-items:center;justify-content:center;padding:24px;background:linear-gradient(160deg,#ffe6ee,#ffb3c9);transition:opacity .8s ease,visibility .8s}
+.gate.hide{opacity:0;visibility:hidden;pointer-events:none}
+.gate-card{width:100%;max-width:380px;background:rgba(255,255,255,.75);border-radius:36px;padding:40px 28px 32px;box-shadow:0 20px 60px rgba(255,77,109,.28)}
+.gate-card h2{font-size:38px;margin-top:6px}
+.gate-card p{margin:10px 0 24px;font-size:16px;line-height:1.6}
+.big-heart{width:84px;height:84px;fill:var(--rose);filter:drop-shadow(0 8px 14px rgba(255,77,109,.45));animation:beat 1.4s ease-in-out infinite}
+@keyframes beat{0%,100%{transform:scale(1)}14%{transform:scale(1.15)}28%{transform:scale(1)}42%{transform:scale(1.12)}70%{transform:scale(1)}}
+#pass{width:100%;padding:16px 22px;text-align:center;border:2px solid #ffc4d6;border-radius:999px;background:#fff;font:400 18px "Poppins",sans-serif;color:var(--ink);letter-spacing:.12em}
+#pass:focus{outline:none;border-color:var(--rose);box-shadow:0 0 0 4px rgba(255,77,109,.18)}
+.open-btn{margin-top:16px;width:100%;padding:15px;border:0;border-radius:999px;cursor:pointer;background:linear-gradient(135deg,#ff7a97,var(--rose));color:#fff;font:500 18px "Poppins",sans-serif;box-shadow:0 10px 24px rgba(255,77,109,.4)}
+.open-btn:active{transform:scale(.97)}
+.error{min-height:1.6em;margin-top:14px;color:var(--crimson);font-weight:500;font-size:15px}
+.hint{display:block;opacity:.65;font-size:13px}
+.shake{animation:shake .45s}
+@keyframes shake{20%,60%{transform:translateX(-10px)}40%,80%{transform:translateX(10px)}}
+
+/* hero */
+.hero{min-height:100vh;min-height:100svh;padding:64px 9vw;display:flex;flex-direction:column;align-items:center;justify-content:center;background:linear-gradient(160deg,#ffe6ee,#ffc4d6)}
+.hero h1{color:var(--pink);font-size:clamp(44px,12vw,84px)}
+.hero p{max-width:30ch;margin:28px auto 0}
+
+/* quote */
+.quote{padding:90px 8vw 70px}
+blockquote{margin:0 auto;max-width:20ch;font:italic 400 clamp(28px,7.5vw,40px)/1.45 "Playfair Display",Georgia,serif;color:var(--crimson)}
+cite{display:block;margin-top:32px;font-style:normal;letter-spacing:.2em;font-size:16px}
+
+/* letter (Arabic text) */
+.letter-wrap{padding:60px 5vw 70px;background:linear-gradient(#fff,#fdf1f5 25%,#fdf1f5 75%,#fff)}
+.letter{max-width:560px;margin:0 auto;background:#fff;border-radius:36px;padding:56px 7vw 64px;box-shadow:0 10px 40px rgba(255,107,139,.12)}
+.letter h2{margin-bottom:34px;font-size:clamp(38px,10vw,56px)}
+.letter .ar{direction:rtl;font-family:"Tajawal",system-ui,sans-serif;font-weight:400;font-size:19px;color:#5f555b;margin:0 0 30px;line-height:2.1}
+.letter .ar.first{font-weight:500;color:var(--crimson);font-size:21px}
+.letter .ar:last-child{margin-bottom:0}
+
+/* gallery */
+.gallery{padding:70px 7vw 90px}
+.photos{display:grid;gap:28px;max-width:460px;margin:48px auto 0}
+.photos img{width:100%;aspect-ratio:1/1;object-fit:cover;display:block;border-radius:28px;box-shadow:0 12px 34px rgba(0,0,0,.18);background:linear-gradient(135deg,#ffe6ee,#ffc4d6)}
+
+/* final */
+.final{background:var(--rose);color:#fff;padding:90px 8vw;cursor:pointer;font:400 clamp(28px,7vw,40px)/1.3 "Playfair Display",Georgia,serif}
+.final p{margin:0}
+
+/* hearts */
+.heart{position:fixed;bottom:-30px;pointer-events:none;z-index:200;animation:rise linear forwards}
+@keyframes rise{to{transform:translateY(-110vh) rotate(40deg);opacity:0}}
+</style>
+</head>
+<body class="locked">
+
+<div class="gate" id="gate">
+  <div class="gate-card" id="card">
+    <svg class="big-heart" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s-7.5-4.8-10-9.6C.4 8 2.2 4.5 5.8 4.5c2.2 0 3.6 1.1 6.2 3.6 2.6-2.5 4-3.6 6.2-3.6 3.6 0 5.4 3.5 3.8 6.9C19.5 16.2 12 21 12 21z"/></svg>
+    <h2>Just for you</h2>
+    <p>Type the secret word to open your surprise.</p>
+    <input type="text" id="pass" placeholder="Secret word" autocomplete="off" autocapitalize="off" aria-label="Secret word">
+    <button type="button" class="open-btn" id="openBtn">Open &#10084;&#65039;</button>
+    <div class="error" id="err" role="status"></div>
+    <small class="hint">Hint: what I feel for you</small>
+  </div>
+</div>
+
+<section class="hero">
+  <h1>Happy Birthday, Shahouda!</h1>
+  <p>To my favorite person, my best friend, and the love of my life. Today is all about you.</p>
+</section>
+
+<section class="quote">
+  <blockquote>"In all the world, there is no heart for me like yours.<br>In all the world, there is no love for you like mine."</blockquote>
+  <cite>&mdash; MAYA</cite>
+</section>
+
+<section class="letter-wrap">
+  <article class="letter">
+    <h2 class="dark">To My Everything...</h2>
+    <p class="ar first">كل سنة وانتي طيبة يا شهوده، كل سنة وانتي أجمل حاجة حصلت في حياتي، وكل سنة وانتي منورة دنيتي ومخلية لكل حاجة فيها طعم ومعنى ❤️</p>
+    <p class="ar">النهارده مش مجرد عيد ميلادك، ده يوم اتولدت فيه إنسانة بقت غالية على قلبي بشكل ميقدرش يوصفه كلام. عاوزك تعرفي إن وجودك في حياتي من أجمل النعم اللي ربنا رزقني بيها، وإن مهما أقولك بحبك، هتفضل الكلمة أقل بكتير من اللي جوايا ليكي.</p>
+    <p class="ar">نفسي أشوفك دايمًا مبسوطة، وضحكتك متفارقش وشك، وكل أحلامك تتحقق، وأكون دايمًا سبب في فرحتك وراحتك.</p>
+    <p class="ar">يارب كل سنة تعدي عليكي تكون أحلى من اللي قبلها، ونفضل نحتفل بعيد ميلادك سوا سنين كتير، ونعيش مع بعض كل اللحظات الحلوة اللي بنحلم بيها.</p>
+    <p class="ar first">عيد ميلاد سعيد يا أجمل شهد في الدنيا، بحبك جدًا، وربنا يخليكي ليا ❤️🎂</p>
+  </article>
+</section>
+
+<section class="gallery">
+  <h2>Our Beautiful Moments</h2>
+  <div class="photos">
+    <img src="../WhatsApp Image 2026-10-31 at 2.25.55 PM.jpeg" alt="Us 1" loading="lazy">
+    <img src="../WhatsApp Image 2026-10-31 at 2.27.52 PM.jpeg" alt="Us 2" loading="lazy">
+    <img src="../WhatsApp Image 2026-10-31 at 2.28.25 PM.jpeg" alt="Us 3" loading="lazy">
+    <img src="../WhatsApp Image 2026-10-31 at 2.28.49 PM.jpeg" alt="Us 4" loading="lazy">
+  </div>
+</section>
+
+<footer class="final" id="final"><p>I love you endlessly. &#10084;&#65039;</p></footer>
+
+<script>
+// Accepted secret words (English and Arabic-keyboard version of "love")
+var PASSWORDS = ['love', '\u0644\u0627\u062B\u0645'];
+
+var gate = document.getElementById('gate');
+var card = document.getElementById('card');
+var input = document.getElementById('pass');
+var err = document.getElementById('err');
+
+function hearts(count) {
+  var icons = ['\u2764\uFE0F', '\uD83D\uDC96', '\u2728', '\uD83C\uDF82'];
+  for (var i = 0; i < count; i++) {
+    var h = document.createElement('div');
+    h.className = 'heart';
+    h.textContent = icons[i % icons.length];
+    h.style.left = Math.random() * 100 + 'vw';
+    h.style.fontSize = (18 + Math.random() * 22) + 'px';
+    h.style.animationDuration = (3 + Math.random() * 3) + 's';
+    h.style.animationDelay = (Math.random() * 0.8) + 's';
+    document.body.appendChild(h);
+    (function (el) { setTimeout(function () { el.remove(); }, 7000); })(h);
+  }
+}
+
+function tryOpen() {
+  var value = input.value.replace(/\s+/g, '').toLowerCase();
+  if (PASSWORDS.indexOf(value) !== -1) {
+    err.textContent = '';
+    gate.classList.add('hide');
+    document.body.classList.remove('locked');
+    window.scrollTo(0, 0);
+    hearts(34);
+  } else {
+    err.textContent = 'Not quite, try again \uD83D\uDC94';
+    card.classList.remove('shake');
+    void card.offsetWidth;
+    card.classList.add('shake');
+    input.select();
+  }
+}
+
+document.getElementById('openBtn').addEventListener('click', tryOpen);
+input.addEventListener('keydown', function (e) { if (e.key === 'Enter') tryOpen(); });
+
+document.getElementById('final').addEventListener('click', function () { hearts(26); });
+
+var imgs = document.querySelectorAll('.photos img');
+for (var i = 0; i < imgs.length; i++) {
+  imgs[i].addEventListener('error', function () { this.removeAttribute('src'); this.alt = ''; });
+}
+</script>
+</body>
+</html>
